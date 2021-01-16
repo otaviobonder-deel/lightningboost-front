@@ -1,8 +1,9 @@
 export interface IData {
     alias?: string
     publicKey: string
+    color: string
     lat?: number
-    long?: number
+    lng?: number
 }
 
 export interface IProps {
@@ -13,16 +14,18 @@ export interface IProps {
 export interface ILabels {
     alias: string
     publicKey: string
+    color: string
     lat: number
-    long: number
+    lng: number
 }
 
 export interface INodeInfo {
     publicKey: string;
-    capacity: number;
+    capacityRatio: number;
 }
 
 export interface INodePairs extends INodeInfo {
+    color: string[]
     endLat: number
     endLng: number
     startLat: number

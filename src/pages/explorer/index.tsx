@@ -6,8 +6,9 @@ import { Map } from '../../components/Map';
 interface IData {
   alias?: string
   publicKey: string
+  color: string
   lat?: number
-  long?: number
+  lng?: number
 }
 
 const useStyles = makeStyles({

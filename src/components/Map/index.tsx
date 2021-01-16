@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactGlobe, { GlobeMethods } from 'react-globe.gl';
+import { makeStyles } from '@material-ui/core';
 import earthBlueMarble from '../../assets/earth-blue-marble.jpg';
 import nightSky from '../../assets/night-sky.png';
 import api from '../../services/api';
@@ -7,18 +8,27 @@ import {
   IProps, ILabels, INodeInfo, INodePairs,
 } from './interfaces';
 
-export const Map: React.FC<IProps> = ({ data, height }) => {
-  const globeEl = useRef<GlobeMethods>();
+const useStyles = makeStyles({
+  container: ({ cursor }: {cursor: string}) => ({
+    cursor,
+  }),
+});
 
+export const Map: React.FC<IProps> = ({ data, height }) => {
+  const [cursor, setCursor] = useState('default');
+  const globeEl = useRef<GlobeMethods>();
   const [arcs, setArcs] = useState<INodePairs[]>([]);
 
+  const classes = useStyles({ cursor });
+
   const labels: ILabels[] = data.map((d) => {
-    if (d.lat && d.long) {
+    if (d.lat && d.lng) {
       return {
         alias: d.alias || d.publicKey,
         publicKey: d.publicKey,
+        color: d.color,
         lat: d.lat,
-        long: d.long,
+        lng: d.lng,
       };
     }
     return null;
@@ -29,24 +39,27 @@ export const Map: React.FC<IProps> = ({ data, height }) => {
       startLat: number,
       startLong: number}) => {
     try {
+      setCursor('wait');
       const { data: nodeInfo } = await api.get<INodeInfo[]>(`/lightning/nodeinfo/${id}`);
       const nodePairs: INodePairs[] = [];
       nodeInfo.forEach((node) => {
         const matchedNode = labels.find((label) => label.publicKey === node.publicKey);
         if (matchedNode) {
-          const { lat, long } = matchedNode;
+          const { lat, lng } = matchedNode;
           nodePairs.push({
             endLat: lat,
-            endLng: long,
+            endLng: lng,
             startLat,
             startLng: startLong,
+            color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]],
             ...node,
           });
         }
       });
       setArcs(nodePairs);
+      setCursor('default');
     } catch (e) {
-      console.log(e);
+      setCursor('default');
     }
   };
 
@@ -54,30 +67,34 @@ export const Map: React.FC<IProps> = ({ data, height }) => {
     const globeElement = globeEl.current;
     if (globeElement) {
       const controls: any = globeElement.controls();
-      controls.minDistance = 150;
+      controls.minDistance = 120;
     }
   }, [globeEl]);
 
   return (
-    <ReactGlobe
-      ref={globeEl}
-      height={height}
-      globeImageUrl={earthBlueMarble}
-      backgroundImageUrl={nightSky}
-      onGlobeClick={() => setArcs([])}
-      pointsData={labels}
-      pointLat={(d: any) => d.lat}
-      pointLng={(d: any) => d.long}
-      pointAltitude={0}
-      onPointClick={(point: any, event) => handleClick({
-        id: point.publicKey,
-        startLat: point.lat,
-        startLong: point.long,
-      })}
-      arcsData={arcs}
-      arcDashLength={() => Math.random()}
-      arcDashGap={() => Math.random()}
-      arcDashAnimateTime={() => Math.random() * 4000 + 500}
-    />
+    <div className={classes.container}>
+      <ReactGlobe
+        ref={globeEl}
+        height={height}
+        globeImageUrl={earthBlueMarble}
+        backgroundImageUrl={nightSky}
+        onGlobeClick={() => setArcs([])}
+        pointsData={labels}
+        pointLat={(d: any) => d.lat}
+        pointLng={(d: any) => d.lng}
+        pointColor="color"
+        pointAltitude={0}
+        onPointClick={(point: any, event) => handleClick({
+          id: point.publicKey,
+          startLat: point.lat,
+          startLong: point.lng,
+        })}
+        arcsData={arcs}
+        arcDashLength="capacityRatio"
+        arcDashGap={0.1}
+        arcDashAnimateTime={5000}
+        arcColor="color"
+      />
+    </div>
   );
 };
