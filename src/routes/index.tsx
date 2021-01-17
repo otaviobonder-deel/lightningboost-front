@@ -1,16 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
-import { Home } from '../pages/home';
-import { Navigation } from '../components/Navigation';
-import { Explorer } from '../pages/explorer';
-import { WatchTower } from '../pages/watchtower';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { Home } from "../pages/home";
+import { Navigation } from "../components/Navigation";
+import { Explorer } from "../pages/explorer";
+import { WatchTower } from "../pages/watchtower";
 
 const useStyles = makeStyles({
   body: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
   },
 });
 
