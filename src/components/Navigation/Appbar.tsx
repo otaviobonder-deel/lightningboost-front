@@ -1,22 +1,28 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { useDispatch } from "react-redux";
 import {
-  AppBar as MuiAppBar, Container, Hidden, IconButton, Toolbar, makeStyles, Typography,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import { AiOutlineThunderbolt } from 'react-icons/ai';
-import theme from '../../styles/customMuiTheme';
-import { Link } from '../Link';
-import { openDrawer } from '../../actions/drawerActions';
-import { BtcPrice } from '../BtcPrice';
+  AppBar as MuiAppBar,
+  Container,
+  Hidden,
+  IconButton,
+  Toolbar,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import theme from "../../styles/customMuiTheme";
+import { Link } from "../Link";
+import { openDrawer } from "../../actions/drawerActions";
+import { BtcPrice } from "../BtcPrice";
 
 interface ILinks {
-    text: string
-    link: string
+  text: string;
+  link: string;
 }
 
 interface IProps {
-    links: ILinks[]
+  links: ILinks[];
 }
 
 const useStyles = makeStyles({
@@ -34,17 +40,17 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   innerDiv: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   outterDiv: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   links: {
-    color: '#fff',
-    textDecoration: 'none',
-    transition: 'color 300ms ease',
-    '&:hover': {
+    color: "#fff",
+    textDecoration: "none",
+    transition: "color 300ms ease",
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
@@ -67,7 +73,11 @@ export const AppBar: React.FC<IProps> = ({ links }) => {
         <Toolbar className={classes.outterDiv}>
           <div className={classes.innerDiv}>
             <Hidden smUp>
-              <IconButton edge="start" className={classes.menuButton} onClick={openAppDrawer}>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                onClick={openAppDrawer}
+              >
                 <MenuIcon />
               </IconButton>
             </Hidden>
@@ -86,7 +96,9 @@ export const AppBar: React.FC<IProps> = ({ links }) => {
                   </Link>
                 </span>
               ))}
-              <span className={classes.span}><BtcPrice /></span>
+              <span className={classes.span}>
+                <BtcPrice />
+              </span>
             </div>
           </Hidden>
           <Hidden smUp>

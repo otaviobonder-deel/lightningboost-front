@@ -1,8 +1,8 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core';
-import theme from '../../styles/customMuiTheme';
-import { AppBar } from './Appbar';
-import { Drawer } from './Drawer';
+import React from "react";
+import { makeStyles } from "@material-ui/core";
+import theme from "../../styles/customMuiTheme";
+import { AppBar } from "./Appbar";
+import { Drawer } from "./Drawer";
 
 const useStyles = makeStyles({
   offset: theme.mixins.toolbar,
@@ -10,24 +10,24 @@ const useStyles = makeStyles({
 
 const links = [
   {
-    text: 'Compare BTC',
-    link: '/comparison',
+    text: "Compare BTC",
+    link: "/comparison",
   },
   {
-    text: 'Channels',
-    link: '/channels',
+    text: "Channels",
+    link: "/channels",
   },
   {
-    text: 'WatchTower',
-    link: '/watchtower',
+    text: "WatchTower",
+    link: "/watchtower",
   },
   {
-    text: 'Liquidity Provider',
-    link: 'liquidity',
+    text: "Liquidity Provider",
+    link: "liquidity",
   },
   {
-    text: 'Explorer',
-    link: '/explorer',
+    text: "Explorer",
+    link: "/explorer",
   },
 ];
 

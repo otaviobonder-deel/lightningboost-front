@@ -1,22 +1,26 @@
-import React from 'react';
+import React from "react";
 import {
-  List, ListItem, ListItemText, makeStyles, Drawer as MuiDrawer,
-} from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles,
+  Drawer as MuiDrawer,
+} from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import { AiOutlineThunderbolt } from 'react-icons/ai';
-import theme from '../../styles/customMuiTheme';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { closeDrawer } from '../../actions/drawerActions';
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import theme from "../../styles/customMuiTheme";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { closeDrawer } from "../../actions/drawerActions";
 
 interface ILinks {
-    text: string
-    link: string
+  text: string;
+  link: string;
 }
 
 interface IProps {
-    links: ILinks[]
+  links: ILinks[];
 }
 
 const useStyles = makeStyles({
@@ -27,12 +31,12 @@ const useStyles = makeStyles({
     minWidth: 220,
   },
   linkText: {
-    color: '#fff',
+    color: "#fff",
   },
   logo: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '24px 0',
+    display: "flex",
+    justifyContent: "center",
+    margin: "24px 0",
   },
 });
 
@@ -42,7 +46,7 @@ export const Drawer: React.FC<IProps> = ({ links }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleClick = ({ link }: {link: string}) => {
+  const handleClick = ({ link }: { link: string }) => {
     dispatch(closeDrawer());
     history.push(link);
   };
@@ -51,11 +55,19 @@ export const Drawer: React.FC<IProps> = ({ links }) => {
     <MuiDrawer open={open} onClose={() => dispatch(closeDrawer())}>
       <div className={classes.drawer}>
         <div className={classes.logo}>
-          <AiOutlineThunderbolt color="yellow" size={32} onClick={() => handleClick({ link: '/' })} />
+          <AiOutlineThunderbolt
+            color="yellow"
+            size={32}
+            onClick={() => handleClick({ link: "/" })}
+          />
         </div>
         <List>
           {links.map((link) => (
-            <ListItem button key={link.link} onClick={() => handleClick({ link: link.link })}>
+            <ListItem
+              button
+              key={link.link}
+              onClick={() => handleClick({ link: link.link })}
+            >
               <ListItemText primary={link.text} className={classes.linkText} />
             </ListItem>
           ))}
