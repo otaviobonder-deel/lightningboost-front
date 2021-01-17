@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, ContainerProps, makeStyles } from '@material-ui/core';
+import React from "react";
+import { Container, ContainerProps, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   container: {
@@ -7,10 +7,15 @@ const useStyles = makeStyles({
   },
 });
 
-export const PageContainer: React.FC<ContainerProps> = ({ children, maxWidth }) => {
+export const PageContainer: React.FC<ContainerProps> = ({
+  children,
+  maxWidth,
+}) => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.container} maxWidth={maxWidth}>{children}</Container>
+    <Container className={classes.container} maxWidth={maxWidth}>
+      {children}
+    </Container>
   );
 };

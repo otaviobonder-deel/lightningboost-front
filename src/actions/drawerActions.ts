@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux';
-import { DrawerTypes } from '../reducers/drawer/types';
+import { Dispatch } from "redux";
+import { DrawerTypes } from "../reducers/drawer/types";
 
 export const openDrawer = () => (dispatch: Dispatch): void => {
   dispatch({
