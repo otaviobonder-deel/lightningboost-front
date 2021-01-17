@@ -10,6 +10,7 @@ interface ResponseProps<T> {
     data: T | undefined,
     error: boolean,
     loading: boolean
+    reload(): void
 }
 
 export const useApiRequest = <T>({ url, initialLoading }: RequestProps): ResponseProps<T> => {
@@ -40,5 +41,6 @@ export const useApiRequest = <T>({ url, initialLoading }: RequestProps): Respons
     data,
     loading,
     error,
+    reload: fetchData,
   };
 };

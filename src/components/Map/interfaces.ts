@@ -11,7 +11,7 @@ export interface IProps {
     height: number
 }
 
-export interface ILabels {
+export interface IPoints {
     alias: string
     publicKey: string
     color: string
@@ -25,6 +25,7 @@ export interface INodeInfo {
 }
 
 export interface INodePairs extends INodeInfo {
+    alias: string
     color: string[]
     endLat: number
     endLng: number
