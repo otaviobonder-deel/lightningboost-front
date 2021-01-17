@@ -1,25 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ReactGlobe, { GlobeMethods } from 'react-globe.gl';
-import { makeStyles } from '@material-ui/core';
-import earthBlueMarble from '../../assets/earth-blue-marble.jpg';
-import nightSky from '../../assets/night-sky.png';
-import api from '../../services/api';
-import {
-  IProps, IPoints, INodeInfo, INodePairs,
-} from './interfaces';
+import React, { useEffect, useRef, useState } from "react";
+import ReactGlobe, { GlobeMethods } from "react-globe.gl";
+import { makeStyles } from "@material-ui/core";
+import earthBlueMarble from "../../assets/earth-blue-marble.jpg";
+import nightSky from "../../assets/night-sky.png";
+import api from "../../services/api";
+import { IProps, IPoints, INodeInfo, INodePairs } from "./interfaces";
 
 const useStyles = makeStyles({
-  container: ({ cursor }: {cursor: string}) => ({
+  container: ({ cursor }: { cursor: string }) => ({
     cursor,
   }),
 });
 
 const getNodePairs = ({
-  nodeInfo, startLng, startLat, points,
-}:{nodeInfo: INodeInfo[], startLng: number, startLat: number, points: IPoints[]}): INodePairs[] => {
+  nodeInfo,
+  startLng,
+  startLat,
+  points,
+}: {
+  nodeInfo: INodeInfo[];
+  startLng: number;
+  startLat: number;
+  points: IPoints[];
+}): INodePairs[] => {
   const nodePairs: INodePairs[] = [];
   nodeInfo.forEach((node) => {
-    const matchedNode = points.find((point) => point.publicKey === node.publicKey);
+    const matchedNode = points.find(
+      (point) => point.publicKey === node.publicKey
+    );
     if (matchedNode) {
       const { lat, lng, alias } = matchedNode;
       nodePairs.push({
@@ -28,7 +36,10 @@ const getNodePairs = ({
         endLng: lng,
         startLat,
         startLng,
-        color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]],
+        color: [
+          ["red", "white", "blue", "green"][Math.round(Math.random() * 3)],
+          ["red", "white", "blue", "green"][Math.round(Math.random() * 3)],
+        ],
         ...node,
       });
     }
@@ -38,7 +49,7 @@ const getNodePairs = ({
 
 export const Map: React.FC<IProps> = ({ data, height }) => {
   // cursor state
-  const [cursor, setCursor] = useState('default');
+  const [cursor, setCursor] = useState("default");
 
   // globe ref
   const globeEl = useRef<GlobeMethods>();
@@ -49,34 +60,46 @@ export const Map: React.FC<IProps> = ({ data, height }) => {
   const classes = useStyles({ cursor });
 
   // nodes
-  const points: IPoints[] = data.map((d) => {
-    if (d.lat && d.lng) {
-      return {
-        alias: d.alias || d.publicKey,
-        publicKey: d.publicKey,
-        color: d.color,
-        lat: d.lat,
-        lng: d.lng,
-      };
-    }
-    return null;
-  }).filter(<T, >(x: T | null): x is T => x !== null);
+  const points: IPoints[] = data
+    .map((d) => {
+      if (d.lat && d.lng) {
+        return {
+          alias: d.alias || d.publicKey,
+          publicKey: d.publicKey,
+          color: d.color,
+          lat: d.lat,
+          lng: d.lng,
+        };
+      }
+      return null;
+    })
+    .filter(<T,>(x: T | null): x is T => x !== null);
 
   // handle click on a node
-  const handleClick = async ({ id, startLat, startLng }: {
-      id: string,
-      startLat: number,
-      startLng: number}) => {
+  const handleClick = async ({
+    id,
+    startLat,
+    startLng,
+  }: {
+    id: string;
+    startLat: number;
+    startLng: number;
+  }) => {
     try {
-      setCursor('wait');
-      const { data: nodeInfo } = await api.get<INodeInfo[]>(`/lightning/nodeinfo/${id}`);
+      setCursor("wait");
+      const { data: nodeInfo } = await api.get<INodeInfo[]>(
+        `/lightning/nodeinfo/${id}`
+      );
       const nodePairs = getNodePairs({
-        nodeInfo, startLng, startLat, points,
+        nodeInfo,
+        startLng,
+        startLat,
+        points,
       });
       setArcs(nodePairs);
-      setCursor('default');
+      setCursor("default");
     } catch (e) {
-      setCursor('default');
+      setCursor("default");
     }
   };
 
@@ -102,11 +125,13 @@ export const Map: React.FC<IProps> = ({ data, height }) => {
         pointLng={(d: any) => d.lng}
         pointColor="color"
         pointAltitude={0}
-        onPointClick={(point: any, event) => handleClick({
-          id: point.publicKey,
-          startLat: point.lat,
-          startLng: point.lng,
-        })}
+        onPointClick={(point: any, event) =>
+          handleClick({
+            id: point.publicKey,
+            startLat: point.lat,
+            startLng: point.lng,
+          })
+        }
         arcsData={arcs}
         arcDashLength="capacityRatio"
         arcDashGap={0.1}
