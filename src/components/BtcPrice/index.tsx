@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 export const BtcPrice: React.FC = () => {
   const [price, setPrice] = useState<IPrice>({
-    value: '...',
+    value: 'loading...',
     direction: '',
   });
 
