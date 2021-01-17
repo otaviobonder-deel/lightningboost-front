@@ -1,19 +1,22 @@
-import { useState, useEffect, useCallback } from 'react';
-import api from '../services/api';
+import { useState, useEffect, useCallback } from "react";
+import api from "../services/api";
 
 interface RequestProps {
-    url: string;
-    initialLoading: boolean;
+  url: string;
+  initialLoading: boolean;
 }
 
 interface ResponseProps<T> {
-    data: T | undefined,
-    error: boolean,
-    loading: boolean
-    reload(): void
+  data: T | undefined;
+  error: boolean;
+  loading: boolean;
+  reload(): void;
 }
 
-export const useApiRequest = <T>({ url, initialLoading }: RequestProps): ResponseProps<T> => {
+export const useApiRequest = <T>({
+  url,
+  initialLoading,
+}: RequestProps): ResponseProps<T> => {
   // Response state
   const [data, setData] = useState<T>();
   const [error, setError] = useState(false);
