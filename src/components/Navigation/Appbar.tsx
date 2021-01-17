@@ -23,6 +23,9 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
+  appBar: {
+    backgroundColor: theme.palette.primary.light,
+  },
   menuButton: {
     marginRight: theme.spacing(2),
     color: theme.palette.secondary.main,
@@ -59,7 +62,7 @@ export const AppBar: React.FC<IProps> = ({ links }) => {
   };
 
   return (
-    <MuiAppBar>
+    <MuiAppBar className={classes.appBar}>
       <Container maxWidth="md">
         <Toolbar className={classes.outterDiv}>
           <div className={classes.innerDiv}>

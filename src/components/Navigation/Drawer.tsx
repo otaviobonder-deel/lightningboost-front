@@ -21,7 +21,7 @@ interface IProps {
 
 const useStyles = makeStyles({
   drawer: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.light,
     color: theme.palette.text.secondary,
     flex: 1,
     minWidth: 220,
