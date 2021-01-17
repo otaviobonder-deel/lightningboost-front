@@ -1,18 +1,21 @@
-import React from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
-import { useApiRequest } from '../../hooks/useApiRequest';
-import { PageContainer } from '../../components/Container/PageContainer';
+import React from "react";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { useApiRequest } from "../../hooks/useApiRequest";
+import { PageContainer } from "../../components/Container/PageContainer";
 
 const useStyles = makeStyles({
   code: {
-    backgroundColor: '#f6f8fa',
+    backgroundColor: "#f6f8fa",
     padding: 5,
   },
 });
 
 export const WatchTower: React.FC = () => {
   const classes = useStyles();
-  const { data: uri, loading, error } = useApiRequest({ initialLoading: true, url: '/lightning/watchtower' });
+  const { data: uri, loading, error } = useApiRequest<string>({
+    initialLoading: true,
+    url: "/lightning/watchtower",
+  });
 
   return (
     <PageContainer maxWidth="md">
@@ -20,7 +23,9 @@ export const WatchTower: React.FC = () => {
         <Grid container spacing={6}>
           <Grid item xs={12} container spacing={2}>
             <Grid item xs={12}>
-              <Typography align="center" component="h1" variant="h4">What are Watchtowers</Typography>
+              <Typography align="center" component="h1" variant="h4">
+                What are Watchtowers
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography align="center">
@@ -29,8 +34,9 @@ export const WatchTower: React.FC = () => {
                 client’s node is offline or unable to respond at the time of a
                 breach, offering greater degree of safety to channel funds. The
                 watchtower node will monitor the Lightning Network channel for
-                breaches; if it notices one, the watchtower will launch a “penalty”
-                transaction that will return the funds to the offline node.
+                breaches; if it notices one, the watchtower will launch a
+                “penalty” transaction that will return the funds to the offline
+                node.
               </Typography>
             </Grid>
           </Grid>
@@ -51,9 +57,7 @@ export const WatchTower: React.FC = () => {
                 <br />
                 <br />
                 1. The watchtower client must be enabled with the
-                {' '}
                 <code className={classes.code}>--wtclient.active</code>
-                {' '}
                 flag.
               </Typography>
             </Grid>
@@ -68,17 +72,23 @@ export const WatchTower: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              {loading && (<Typography variant="body2">Loading my node&apos;s URI</Typography>)}
-              {error && (<Typography variant="body2">There was a problem loading the URI</Typography>)}
-              {uri
-              && (
-              <Typography align="center" className={classes.code}>
-                <code style={{ wordBreak: 'break-all', textAlign: 'center' }}>
-                  lncli wtclient add
-                  {' '}
-                  {uri}
-                </code>
-              </Typography>
+              {loading && (
+                <Typography variant="body2">
+                  Loading my node&apos;s URI
+                </Typography>
+              )}
+              {error && (
+                <Typography variant="body2">
+                  There was a problem loading the URI
+                </Typography>
+              )}
+              {uri && (
+                <Typography align="center" className={classes.code}>
+                  <code style={{ wordBreak: "break-all", textAlign: "center" }}>
+                    lncli wtclient add
+                    {uri}
+                  </code>
+                </Typography>
               )}
             </Grid>
           </Grid>
