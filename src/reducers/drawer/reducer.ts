@@ -1,6 +1,6 @@
 import { DrawerTypes, IDrawerAction, IDrawerState } from "./types";
 
-const initialState = {
+const initialState: IDrawerState = {
   open: false,
 };
 
