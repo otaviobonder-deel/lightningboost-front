@@ -5,6 +5,7 @@ import { Home } from "../pages/home";
 import { Navigation } from "../components/Navigation";
 import { Explorer } from "../pages/explorer";
 import { WatchTower } from "../pages/watchtower";
+import { LiquidityProvider } from "../pages/liquidity";
 
 const useStyles = makeStyles({
   body: {
@@ -30,6 +31,9 @@ export const Routes: React.FC = () => {
           </Route>
           <Route path="/watchtower">
             <WatchTower />
+          </Route>
+          <Route path="/liquidity">
+            <LiquidityProvider />
           </Route>
         </Switch>
       </Router>
