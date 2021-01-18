@@ -78,7 +78,7 @@ export const WatchTower: React.FC = () => {
                 </Typography>
               )}
               {error && (
-                <Typography variant="body2">
+                <Typography align="center" variant="body2">
                   There was a problem loading the URI
                 </Typography>
               )}
