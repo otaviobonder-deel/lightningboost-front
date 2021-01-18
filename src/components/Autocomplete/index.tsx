@@ -25,6 +25,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
   param,
   label,
   field: { value, name },
+  form: { errors, touched },
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<IApiResponse[]>([]);
@@ -84,7 +85,13 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
     <MuiAutocomplete
       fullWidth
       renderInput={(params) => (
-        <TextField {...params} label={label} fullWidth />
+        <TextField
+          {...params}
+          label={label}
+          fullWidth
+          error={!!(touched[name] && errors[name])}
+          helperText={touched[name] && errors[name]}
+        />
       )}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.label
