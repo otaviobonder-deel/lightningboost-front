@@ -14,7 +14,7 @@ interface IOptions {
   fromCents?: boolean;
 }
 
-const Currency = (value: number, options?: IOptions) =>
+const Currency = (value: number, options?: IOptions): currency =>
   currencyLib(value, { symbol: "", ...options });
 
 export default Currency;
