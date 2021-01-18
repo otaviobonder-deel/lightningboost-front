@@ -28,6 +28,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<IApiResponse[]>([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const { setFieldValue } = useFormikContext();
@@ -41,6 +42,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
     () =>
       pDebounce(async ({ input, active }) => {
         try {
+          setLoading(true);
           const response = await api.get<IApiResponse[]>(
             `${url}?${param}=${input}`
           );
@@ -54,7 +56,9 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
             }
             setOptions(newOptions);
           }
+          setLoading(false);
         } catch (e) {
+          setLoading(false);
           dispatch(openSnackbar({ message: "Error loading", status: "error" }));
         }
       }, 500),
@@ -78,7 +82,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
 
   return (
     <MuiAutocomplete
-      style={{ width: 300 }}
+      fullWidth
       renderInput={(params) => (
         <TextField {...params} label={label} fullWidth />
       )}
@@ -91,6 +95,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
+      loading={loading}
     />
   );
 };
