@@ -24,6 +24,7 @@ export const useApiRequest = <T>({
 
   const fetchData = useCallback(async () => {
     setLoading(true);
+    setError(false);
     try {
       // Fetch data from REST API
       const response = await api.get<T>(url);
