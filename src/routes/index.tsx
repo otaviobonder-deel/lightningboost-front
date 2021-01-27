@@ -6,6 +6,7 @@ import { Navigation } from "../components/Navigation";
 import { Explorer } from "../pages/explorer";
 import { WatchTower } from "../pages/watchtower";
 import { LiquidityProvider } from "../pages/liquidity";
+import { Comparison } from "../pages/comparison";
 
 const useStyles = makeStyles({
   body: {
@@ -34,6 +35,9 @@ export const Routes: React.FC = () => {
           </Route>
           <Route path="/liquidity">
             <LiquidityProvider />
+          </Route>
+          <Route path="/comparison">
+            <Comparison />
           </Route>
         </Switch>
       </Router>
