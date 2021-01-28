@@ -34,6 +34,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
 
   const { setFieldValue } = useFormikContext();
 
+  // eslint-disable-next-line
   const handleChange = (event: any, newValue: IApiResponse) => {
     setOptions(newValue ? [newValue, ...options] : options);
     setFieldValue(name, newValue, true);
@@ -63,6 +64,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
           dispatch(openSnackbar({ message: "Error loading", status: "error" }));
         }
       }, 500),
+    // eslint-disable-next-line
     []
   );
 
@@ -79,6 +81,7 @@ export const Autocomplete: React.FC<IProps & FieldProps> = ({
     return () => {
       active = false;
     };
+    // eslint-disable-next-line
   }, [value, inputValue]);
 
   return (

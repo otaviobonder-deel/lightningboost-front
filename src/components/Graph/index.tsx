@@ -244,8 +244,8 @@ export const Graph: React.FC<IProps> = ({ data }) => {
         width={size.width}
         height={size.height}
         nodeId="publicKey"
-        onNodeClick={(node: any) => handleNodeClick(node)}
-        onNodeHover={(node: any) => setHoverNode(node)}
+        onNodeClick={(node: any) => handleNodeClick(node)} // eslint-disable-line
+        onNodeHover={(node: any) => setHoverNode(node)} // eslint-disable-line
         nodeResolution={getPerformanceOptions().resolution}
         onNodeDragEnd={(node) => {
           Object.assign(node, {
