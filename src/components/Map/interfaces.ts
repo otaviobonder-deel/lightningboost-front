@@ -1,6 +1,13 @@
+/* eslint-disable camelcase */
+
 import { Viewer } from "cesium";
 
 export interface IData {
+  nodes: INode[];
+  links: ILink[];
+}
+
+export interface INode {
   alias?: string;
   publicKey: string;
   color: string;
@@ -8,9 +15,20 @@ export interface IData {
   lng?: number;
 }
 
+export interface ILink {
+  id: string;
+  policies: [
+    {
+      public_key: string;
+    }
+  ];
+  capacity: string;
+  transaction_id: string;
+  color?: string;
+}
+
 export interface IProps {
-  data: IData[];
-  height?: number;
+  data: IData;
 }
 
 export interface IPoints {

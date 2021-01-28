@@ -36,6 +36,7 @@ import {
   IData,
   INodeInfo,
   INodePairs,
+  INode,
   IPoints,
   IProps,
 } from "./interfaces";
@@ -152,7 +153,7 @@ const SelectedNodeInfo = ({
   handleCloseInfo,
   pairs,
 }: {
-  selectedNode: IData;
+  selectedNode: INode;
   handleCloseInfo: () => void;
   pairs: INodePairs;
 }) => {
@@ -189,7 +190,7 @@ const HoveredNodeInfo = ({
   node,
   cesiumElement,
 }: {
-  node: IData;
+  node: INode;
   cesiumElement: CViewer;
 }) => {
   const classes = useStyles();
@@ -212,15 +213,15 @@ const HoveredNodeInfo = ({
 
 export const ResiumMap: React.FC<IProps> = ({ data }) => {
   const viewerRef = useRef<CesiumComponentRef<CViewer>>(null);
-  const [selectedNode, setSelectedNode] = useState<IData | null>(null);
+  const [selectedNode, setSelectedNode] = useState<INode | null>(null);
   const [selectedNodePairs, setSelectedNodePairs] = useState<INodePairs>({
     loading: false,
     error: false,
     data: [],
   });
-  const [hoveredNode, setHoveredNode] = useState<IData | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<INode | null>(null);
 
-  const handleClick = async (node: IData) => {
+  const handleClick = async (node: INode) => {
     setSelectedNode(node);
     try {
       setSelectedNodePairs({ data: [], error: false, loading: true });
@@ -229,7 +230,7 @@ export const ResiumMap: React.FC<IProps> = ({ data }) => {
       );
       const nodePairs: IPoints[] = [];
       nodeInfo.forEach((pairNode) => {
-        const matchedNode = data.find(
+        const matchedNode = data.nodes.find(
           (point) => point.publicKey === pairNode.publicKey
         );
         if (
@@ -300,7 +301,7 @@ export const ResiumMap: React.FC<IProps> = ({ data }) => {
             <Globe enableLighting />
             <ImageryLayer imageryProvider={imageryProvider} />
             <PointPrimitiveCollection>
-              {data.map((node) => {
+              {data.nodes.map((node) => {
                 if (node.lat && node.lng) {
                   return (
                     <PointPrimitive

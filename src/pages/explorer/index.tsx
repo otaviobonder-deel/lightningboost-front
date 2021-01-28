@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import React from "react";
 import {
   Button,
@@ -12,11 +14,28 @@ import { useApiRequest } from "../../hooks/useApiRequest";
 import { ResiumMap } from "../../components/Map";
 
 interface IData {
-  alias?: string;
-  publicKey: string;
-  color: string;
-  lat?: number;
-  lng?: number;
+  nodes: [
+    {
+      alias?: string;
+      publicKey: string;
+      color: string;
+      lat?: number;
+      lng?: number;
+    }
+  ];
+  links: [
+    {
+      id: string;
+      policies: [
+        {
+          public_key: string;
+        }
+      ];
+      capacity: string;
+      transaction_id: string;
+      color?: string;
+    }
+  ];
 }
 
 const useStyles = makeStyles({
@@ -35,7 +54,7 @@ const useStyles = makeStyles({
 export const Explorer: React.FC = () => {
   const classes = useStyles();
 
-  const { data, error, loading, reload } = useApiRequest<IData[]>({
+  const { data, error, loading, reload } = useApiRequest<IData>({
     url: "/lightning/chaingraph",
     initialLoading: true,
   });
