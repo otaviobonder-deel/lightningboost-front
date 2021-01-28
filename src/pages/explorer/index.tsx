@@ -56,14 +56,17 @@ const useStyles = makeStyles({
     flex: 1,
     justifyContent: "center",
   },
-  icons: {
-    fill: "#fff",
-  },
   toggleButton: {
     position: "absolute",
     top: 25,
     left: "50%",
     transform: "translate(-50%, 0%)",
+  },
+  iconSelected: {
+    color: "yellow !important",
+  },
+  icon: {
+    color: "#fff",
   },
 });
 
@@ -130,13 +133,21 @@ export const Explorer: React.FC = () => {
       <div className={classes.toggleButton}>
         <ToggleButtonGroup value={mapType} exclusive onChange={handleMapChange}>
           <Tooltip title="Globe">
-            <ToggleButton value="globe">
-              <Public className={classes.icons} />
+            <ToggleButton
+              classes={{ selected: classes.iconSelected, root: classes.icon }}
+              value="globe"
+              selected={mapType === "globe"}
+            >
+              <Public />
             </ToggleButton>
           </Tooltip>
           <Tooltip title="Graph">
-            <ToggleButton value="graph">
-              <Timeline className={classes.icons} />
+            <ToggleButton
+              classes={{ selected: classes.iconSelected, root: classes.icon }}
+              value="graph"
+              selected={mapType === "graph"}
+            >
+              <Timeline />
             </ToggleButton>
           </Tooltip>
         </ToggleButtonGroup>
