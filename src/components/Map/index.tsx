@@ -54,7 +54,8 @@ const useStyles = makeStyles({
   },
   nodeInfoLoading: {
     display: "flex",
-    justify: "center",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
   },
   nodeInfoData: {
