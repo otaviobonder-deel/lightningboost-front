@@ -33,7 +33,6 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import {
   IArcCreation,
-  IData,
   INodeInfo,
   INodePairs,
   INode,

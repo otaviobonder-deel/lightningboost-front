@@ -31,7 +31,6 @@ const leanLightningGraph = (graph: IGraph) => {
       visible: false,
     };
   });
-
   const links: IEdgesFunc[] = graph.links.map((edge) => {
     const node1 = edge.policies[0].public_key;
     const node2 = edge.policies[1].public_key;
@@ -46,8 +45,10 @@ const leanLightningGraph = (graph: IGraph) => {
       capacity,
       color,
     };
-    adjacencyList[node1].push(edgeNode);
-    adjacencyList[node2].push(edgeNode);
+    if (adjacencyList[node1] && adjacencyList[node2]) {
+      adjacencyList[node1].push(edgeNode);
+      adjacencyList[node2].push(edgeNode);
+    }
     return edgeNode;
   });
 
@@ -62,6 +63,9 @@ const showNodes = (nodes: INodesFunc[], edges: number) =>
   }));
 
 const useStyles = makeStyles({
+  container: {
+    flex: 1,
+  },
   buttons: {
     margin: "5px 0",
   },
@@ -107,10 +111,20 @@ export const Graph: React.FC<IProps> = ({ data }) => {
   const classes = useStyles();
   const [hoverNode, setHoverNode] = useState<INode | null>(null);
   const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0,
   });
   const graphRef = useRef<ForceGraphMethods>();
+
+  // set graph size
+  const containerRef = useCallback((node) => {
+    if (node !== null) {
+      setSize({
+        width: node.getBoundingClientRect().width,
+        height: node.getBoundingClientRect().height,
+      });
+    }
+  }, []);
 
   // minimum amount of channels to show on graph
   const [minEdges, setMinEdges] = useState(30);
@@ -122,7 +136,7 @@ export const Graph: React.FC<IProps> = ({ data }) => {
     const { nodes, links } = leanLightningGraph(data);
     const visibleNodes = showNodes(nodes, minEdges);
     return { nodes: visibleNodes, links };
-  }, [minEdges]);
+  }, [minEdges, data]);
 
   // create a dic of nodes to faster access
   const nodesById = useMemo(
@@ -143,7 +157,12 @@ export const Graph: React.FC<IProps> = ({ data }) => {
     });
     // only add edges that should be visible
     graph.links.forEach((link) => {
-      if (nodesById[link.node1].visible && nodesById[link.node2].visible) {
+      if (
+        nodesById[link.node1] &&
+        nodesById[link.node2] &&
+        nodesById[link.node1].visible &&
+        nodesById[link.node2].visible
+      ) {
         visibleLinks.push(link);
       }
     });
@@ -216,20 +235,12 @@ export const Graph: React.FC<IProps> = ({ data }) => {
     };
   }, []);
 
-  // while graph is loading
-  if (!prunedTree) {
-    return (
-      <div className={classes.loaderContainer}>
-        <Typography align="center">Loading</Typography>
-      </div>
-    );
-  }
-
-  return (
-    <>
+  // memoized graph component
+  const FGraph = useMemo(
+    () => (
       <ForceGraph
         ref={graphRef}
-        graphData={data}
+        graphData={prunedTree}
         width={size.width}
         height={size.height}
         nodeId="publicKey"
@@ -251,6 +262,22 @@ export const Graph: React.FC<IProps> = ({ data }) => {
           powerPreference: "high-performance",
         }}
       />
+    ),
+    [size, prunedTree, getPerformanceOptions, handleNodeClick]
+  );
+
+  // while graph is loading
+  if (!prunedTree) {
+    return (
+      <div className={classes.loaderContainer}>
+        <Typography align="center">Loading</Typography>
+      </div>
+    );
+  }
+
+  return (
+    <div ref={containerRef} className={classes.container}>
+      {FGraph}
       <Options graphRef={graphRef} />
       {hoverNode && graphRef.current && (
         <NodeInfo
@@ -258,6 +285,56 @@ export const Graph: React.FC<IProps> = ({ data }) => {
           info={hoverNode}
         />
       )}
-    </>
+      <div className={classes.info}>
+        <Typography className={classes.text} gutterBottom>
+          Rendering {prunedTree.nodes.length} nodes and{" "}
+          {prunedTree.links.length} channels
+        </Typography>
+        <Typography className={classes.text} gutterBottom>
+          Click on a node to expand channels to smaller nodes
+        </Typography>
+        <Typography className={classes.text} gutterBottom>
+          Hover on a node to get more info
+        </Typography>
+        {minEdges === 0 ? (
+          <Typography className={classes.text} gutterBottom>
+            Showing all nodes and channels
+          </Typography>
+        ) : (
+          <Typography className={classes.text} gutterBottom>
+            Initially showing nodes with {minEdges} or more channels
+          </Typography>
+        )}
+        <Button
+          className={classes.buttons}
+          color="secondary"
+          variant="outlined"
+          disabled={minEdges === 0}
+          onClick={() =>
+            setMinEdges((prevEdges) => (prevEdges - 5 < 0 ? 0 : prevEdges - 5))
+          }
+        >
+          Show more nodes
+        </Button>
+        <Button
+          className={classes.buttons}
+          color="secondary"
+          variant="outlined"
+          onClick={() => setMinEdges((prevEdges) => prevEdges + 5)}
+        >
+          Show less nodes
+        </Button>
+        <Button
+          className={classes.buttons}
+          color="secondary"
+          variant="outlined"
+          onClick={handleButtonClick}
+        >
+          {minEdges === 0
+            ? "Show only nodes with 30 or more channels"
+            : "Show all nodes and channels"}
+        </Button>
+      </div>
+    </div>
   );
 };

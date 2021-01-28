@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import React from "react";
+import React, { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { ForceGraphMethods } from "react-force-graph-3d";
 
 export interface IProps {

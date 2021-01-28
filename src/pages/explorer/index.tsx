@@ -1,17 +1,20 @@
 /* eslint-disable camelcase */
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   CircularProgress,
   Container,
   Grid,
   makeStyles,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
-import { ErrorOutline } from "@material-ui/icons";
+import { ErrorOutline, Public, Timeline } from "@material-ui/icons";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { useApiRequest } from "../../hooks/useApiRequest";
 import { ResiumMap } from "../../components/Map";
+import { Graph } from "../../components/Graph";
 
 interface IData {
   nodes: [
@@ -29,6 +32,9 @@ interface IData {
       policies: [
         {
           public_key: string;
+        },
+        {
+          public_key: string;
         }
       ];
       capacity: string;
@@ -40,6 +46,7 @@ interface IData {
 
 const useStyles = makeStyles({
   container: {
+    display: "flex",
     flex: 1,
     position: "relative",
   },
@@ -49,15 +56,35 @@ const useStyles = makeStyles({
     flex: 1,
     justifyContent: "center",
   },
+  icons: {
+    fill: "#fff",
+  },
+  toggleButton: {
+    position: "absolute",
+    top: 25,
+    left: "50%",
+    transform: "translate(-50%, 0%)",
+  },
 });
 
 export const Explorer: React.FC = () => {
   const classes = useStyles();
 
+  const [mapType, setMapType] = useState<"globe" | "graph">("globe");
+
   const { data, error, loading, reload } = useApiRequest<IData>({
     url: "/lightning/chaingraph",
     initialLoading: true,
   });
+
+  const handleMapChange = (
+    event: React.MouseEvent<HTMLElement>,
+    type: "globe" | "graph" | null
+  ) => {
+    if (type !== null) {
+      setMapType(type);
+    }
+  };
 
   if (loading) {
     return (
@@ -97,6 +124,23 @@ export const Explorer: React.FC = () => {
   }
 
   return (
-    <div className={classes.container}>{data && <ResiumMap data={data} />}</div>
+    <div className={classes.container}>
+      {data && mapType === "globe" && <ResiumMap data={data} />}
+      {data && mapType === "graph" && <Graph data={data} />}
+      <div className={classes.toggleButton}>
+        <ToggleButtonGroup value={mapType} exclusive onChange={handleMapChange}>
+          <Tooltip title="Globe">
+            <ToggleButton value="globe">
+              <Public className={classes.icons} />
+            </ToggleButton>
+          </Tooltip>
+          <Tooltip title="Graph">
+            <ToggleButton value="graph">
+              <Timeline className={classes.icons} />
+            </ToggleButton>
+          </Tooltip>
+        </ToggleButtonGroup>
+      </div>
+    </div>
   );
 };

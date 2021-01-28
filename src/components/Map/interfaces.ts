@@ -20,6 +20,9 @@ export interface ILink {
   policies: [
     {
       public_key: string;
+    },
+    {
+      public_key: string;
     }
   ];
   capacity: string;
