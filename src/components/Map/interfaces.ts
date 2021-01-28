@@ -1,3 +1,5 @@
+import { Viewer } from "cesium";
+
 export interface IData {
   alias?: string;
   publicKey: string;
@@ -8,27 +10,37 @@ export interface IData {
 
 export interface IProps {
   data: IData[];
-  height: number;
+  height?: number;
 }
 
 export interface IPoints {
   alias: string;
   publicKey: string;
   color: string;
-  lat: number;
-  lng: number;
+  startLat: number;
+  startLng: number;
+  endLat?: number;
+  endLng?: number;
+  capacityRatio: number;
+  channelId: string;
 }
 
 export interface INodeInfo {
   publicKey: string;
   capacityRatio: number;
+  channelId: string;
 }
 
-export interface INodePairs extends INodeInfo {
-  alias: string;
-  color: string[];
-  endLat: number;
-  endLng: number;
+export interface INodePairs {
+  loading: boolean;
+  error: boolean;
+  data: IPoints[];
+}
+
+export interface IArcCreation {
+  cesiumElement: Viewer;
   startLat: number;
   startLng: number;
+  endLat: number;
+  endLng: number;
 }

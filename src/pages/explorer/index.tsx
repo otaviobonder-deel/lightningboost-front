@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   Button,
   CircularProgress,
@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { ErrorOutline } from "@material-ui/icons";
 import { useApiRequest } from "../../hooks/useApiRequest";
-import { Map } from "../../components/Map";
+import { ResiumMap } from "../../components/Map";
 
 interface IData {
   alias?: string;
@@ -22,6 +22,7 @@ interface IData {
 const useStyles = makeStyles({
   container: {
     flex: 1,
+    position: "relative",
   },
   awaiting: {
     alignItems: "center",
@@ -32,20 +33,12 @@ const useStyles = makeStyles({
 });
 
 export const Explorer: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
   const classes = useStyles();
 
   const { data, error, loading, reload } = useApiRequest<IData[]>({
     url: "/lightning/chaingraph",
     initialLoading: true,
   });
-
-  useEffect(() => {
-    if (containerRef !== null && containerRef.current) {
-      setContainerHeight(containerRef.current.offsetHeight);
-    }
-  }, [containerRef?.current]);
 
   if (loading) {
     return (
@@ -85,8 +78,6 @@ export const Explorer: React.FC = () => {
   }
 
   return (
-    <div ref={containerRef} className={classes.container}>
-      {data && <Map data={data} height={containerHeight} />}
-    </div>
+    <div className={classes.container}>{data && <ResiumMap data={data} />}</div>
   );
 };
