@@ -11,7 +11,6 @@ import { Link } from "../../components/Link";
 
 interface IBox {
   title: string;
-  icon?: string;
 }
 
 const useStyles = makeStyles({
@@ -38,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Box: React.FC<IBox> = ({ children, title, icon }) => {
+const Box: React.FC<IBox> = ({ children, title }) => {
   const classes = useStyles();
 
   return (
