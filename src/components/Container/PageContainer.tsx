@@ -3,7 +3,7 @@ import { Container, ContainerProps, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   container: {
-    marginTop: 30,
+    margin: "30px 0",
   },
 });
 

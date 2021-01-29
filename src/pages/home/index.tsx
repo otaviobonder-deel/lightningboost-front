@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import thunderBackground from "../../assets/thunder.mp4";
 import { Link } from "../../components/Link";
+import { PageContainer } from "../../components/Container/PageContainer";
 
 interface IBox {
   title: string;
@@ -16,9 +17,6 @@ interface IBox {
 const useStyles = makeStyles({
   container: {
     position: "relative",
-  },
-  aboutSection: {
-    marginTop: 50,
   },
   innerGrid: {
     display: "flex",
@@ -91,7 +89,7 @@ export const Home: React.FC = () => {
           </Container>
         </div>
       </div>
-      <Container maxWidth="md" className={classes.aboutSection}>
+      <PageContainer maxWidth="md">
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Typography align="center" component="h2" variant="h6">
@@ -144,7 +142,7 @@ export const Home: React.FC = () => {
             </Link>
           </Grid>
         </Grid>
-      </Container>
+      </PageContainer>
     </>
   );
 };
