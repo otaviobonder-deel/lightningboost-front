@@ -15,12 +15,7 @@ import { useDispatch } from "react-redux";
 import Currency from "../../utils/Currency";
 import api from "../../services/api";
 import { openSnackbar } from "../../actions/snackbarActions";
-import {
-  IForm,
-  IChannelResponse,
-  ISliderProps,
-  IProps,
-} from "../../pages/liquidity/interfaces";
+import { IForm, IChannelResponse, ISliderProps, IProps } from "./interfaces";
 
 const initialValues: IForm = {
   publicKey: "",
