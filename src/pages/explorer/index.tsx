@@ -15,6 +15,7 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { useApiRequest } from "../../hooks/useApiRequest";
 import { ResiumMap } from "../../components/Map";
 import { Graph } from "../../components/Graph";
+import { HelmetMetaTag } from "../../components/Helmet";
 
 interface IData {
   nodes: [
@@ -91,67 +92,92 @@ export const Explorer: React.FC = () => {
 
   if (loading) {
     return (
-      <Container maxWidth="md" className={classes.awaiting}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={12} container justify="center">
-            <CircularProgress />
+      <>
+        <HelmetMetaTag
+          title="Explore the Lightning Network | LightningBoost"
+          description="Explore the all Lightning Network nodes in a map or a graph. Search for any node and see its public channels and peers."
+          keywords="lightning network, explore, graph"
+        />
+        <Container maxWidth="md" className={classes.awaiting}>
+          <Grid container spacing={2} justify="center">
+            <Grid item xs={12} container justify="center">
+              <CircularProgress />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography align="center">Loading chain graph</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography align="center">Loading chain graph</Typography>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </>
     );
   }
 
   if (error) {
     return (
-      <Container maxWidth="md" className={classes.awaiting}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={12} container justify="center">
-            <ErrorOutline style={{ fill: "red" }} />
+      <>
+        <HelmetMetaTag
+          title="Explore the Lightning Network | LightningBoost"
+          description="Explore the all Lightning Network nodes in a map or a graph. Search for any node and see its public channels and peers."
+          keywords="lightning network, explore, graph"
+        />
+        <Container maxWidth="md" className={classes.awaiting}>
+          <Grid container spacing={2} justify="center">
+            <Grid item xs={12} container justify="center">
+              <ErrorOutline style={{ fill: "red" }} />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography align="center">
+                There was an error loading the chain graph
+              </Typography>
+            </Grid>
+            <Grid item xs={12} container justify="center">
+              <Button onClick={() => reload()} variant="outlined">
+                Retry
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography align="center">
-              There was an error loading the chain graph
-            </Typography>
-          </Grid>
-          <Grid item xs={12} container justify="center">
-            <Button onClick={() => reload()} variant="outlined">
-              Retry
-            </Button>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </>
     );
   }
 
   return (
-    <div className={classes.container}>
-      {data && mapType === "globe" && <ResiumMap data={data} />}
-      {data && mapType === "graph" && <Graph data={data} />}
-      <div className={classes.toggleButton}>
-        <ToggleButtonGroup value={mapType} exclusive onChange={handleMapChange}>
-          <Tooltip title="Globe">
-            <ToggleButton
-              classes={{ selected: classes.iconSelected, root: classes.icon }}
-              value="globe"
-              selected={mapType === "globe"}
-            >
-              <Public />
-            </ToggleButton>
-          </Tooltip>
-          <Tooltip title="Graph">
-            <ToggleButton
-              classes={{ selected: classes.iconSelected, root: classes.icon }}
-              value="graph"
-              selected={mapType === "graph"}
-            >
-              <Timeline />
-            </ToggleButton>
-          </Tooltip>
-        </ToggleButtonGroup>
+    <>
+      <HelmetMetaTag
+        title="Explore the Lightning Network | LightningBoost"
+        description="Explore the all Lightning Network nodes in a map or a graph. Search for any node and see its public channels and peers."
+        keywords="lightning network, explore, graph"
+      />
+      <div className={classes.container}>
+        {data && mapType === "globe" && <ResiumMap data={data} />}
+        {data && mapType === "graph" && <Graph data={data} />}
+        <div className={classes.toggleButton}>
+          <ToggleButtonGroup
+            value={mapType}
+            exclusive
+            onChange={handleMapChange}
+          >
+            <Tooltip title="Globe">
+              <ToggleButton
+                classes={{ selected: classes.iconSelected, root: classes.icon }}
+                value="globe"
+                selected={mapType === "globe"}
+              >
+                <Public />
+              </ToggleButton>
+            </Tooltip>
+            <Tooltip title="Graph">
+              <ToggleButton
+                classes={{ selected: classes.iconSelected, root: classes.icon }}
+                value="graph"
+                selected={mapType === "graph"}
+              >
+                <Timeline />
+              </ToggleButton>
+            </Tooltip>
+          </ToggleButtonGroup>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

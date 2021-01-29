@@ -9,6 +9,7 @@ import { LiquidityProvider } from "../pages/liquidity";
 import { Comparison } from "../pages/comparison";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { Footer } from "../components/Footer";
+import { NotFound } from "../pages/notFound";
 
 const useStyles = makeStyles({
   body: {
@@ -47,6 +48,9 @@ export const Routes: React.FC = () => {
               </Route>
               <Route path="/comparison">
                 <Comparison />
+              </Route>
+              <Route path="*">
+                <NotFound />
               </Route>
             </Switch>
           </div>
