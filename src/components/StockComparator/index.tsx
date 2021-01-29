@@ -9,6 +9,10 @@ const useStyles = makeStyles({
   container: {
     margin: "20px 0",
     padding: 10,
+    flex: 1,
+  },
+  grid: {
+    display: "flex",
   },
   title: {
     fontWeight: 800,
@@ -29,10 +33,10 @@ const Result: React.FC<IResult> = ({
   return (
     <Paper className={classes.container}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={2}>
+        <Grid item xs={3} container justify="center">
           <img src={image} alt="logo" width={48} />
         </Grid>
-        <Grid item xs={10} container spacing={1}>
+        <Grid item xs={9} container spacing={1}>
           <Grid item xs={12}>
             <Typography className={classes.title} variant="h6">
               Investing in {stock}
@@ -70,29 +74,33 @@ export const StockComparator: React.FC<IProps> = ({
   amountStock,
   profitStock,
   totalStock,
-}) => (
-  <Grid container spacing={4}>
-    <Grid item xs={12} sm={6}>
-      <Result
-        image={bitcoin}
-        stock="Bitcoin"
-        amount={amountBitcoin}
-        type="bitcoins"
-        total={totalBitcoin}
-        profit={profitBitcoin}
-        invested={invested}
-      />
+}) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container spacing={4}>
+      <Grid item xs={12} sm={6} className={classes.grid}>
+        <Result
+          image={bitcoin}
+          stock="Bitcoin"
+          amount={amountBitcoin}
+          type="bitcoins"
+          total={totalBitcoin}
+          profit={profitBitcoin}
+          invested={invested}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} className={classes.grid}>
+        <Result
+          image={stocks}
+          stock={stock}
+          amount={amountStock}
+          type="shares"
+          total={totalStock}
+          profit={profitStock}
+          invested={invested}
+        />
+      </Grid>
     </Grid>
-    <Grid item xs={12} sm={6}>
-      <Result
-        image={stocks}
-        stock={stock}
-        amount={amountStock}
-        type="shares"
-        total={totalStock}
-        profit={profitStock}
-        invested={invested}
-      />
-    </Grid>
-  </Grid>
-);
+  );
+};
