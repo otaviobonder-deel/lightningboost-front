@@ -9,6 +9,7 @@ import { Chart } from "./Chart";
 import { Loader } from "../Loader";
 import { useQuery } from "../../hooks/useQuery";
 import { StockComparator } from "../StockComparator";
+import { Share } from "../Share";
 
 interface ISimulation {
   loading: boolean;
@@ -103,41 +104,48 @@ export const ChartComparison: React.FC = () => {
         </Grid>
       )}
       {simulation.data && (
-        <Grid item xs={12}>
-          <Chart
-            invested={simulation.data.invested}
-            stockTotal={simulation.data.stockTotal}
-            btcTotal={simulation.data.btcTotal}
-            chart={simulation.data.chart}
-            symbol={simulation.data.symbol}
-          />
-          <StockComparator
-            amountBitcoin={simulation.data.btcTotal}
-            totalBitcoin={
-              simulation.data.chart[simulation.data.chart.length - 1]
-                .investmentTotalBtc
-            }
-            profitBitcoin={
-              simulation.data.chart[simulation.data.chart.length - 1]
-                .investmentTotalBtc /
-                simulation.data.invested -
-              1
-            }
-            invested={simulation.data.invested}
-            stock={simulation.data.symbol}
-            amountStock={simulation.data.stockTotal}
-            totalStock={
-              simulation.data.chart[simulation.data.chart.length - 1]
-                .investmentTotalStock
-            }
-            profitStock={
-              simulation.data.chart[simulation.data.chart.length - 1]
-                .investmentTotalStock /
-                simulation.data.invested -
-              1
-            }
-          />
-        </Grid>
+        <>
+          <Grid item xs={12}>
+            <Chart
+              invested={simulation.data.invested}
+              stockTotal={simulation.data.stockTotal}
+              btcTotal={simulation.data.btcTotal}
+              chart={simulation.data.chart}
+              symbol={simulation.data.symbol}
+            />
+            <StockComparator
+              amountBitcoin={simulation.data.btcTotal}
+              totalBitcoin={
+                simulation.data.chart[simulation.data.chart.length - 1]
+                  .investmentTotalBtc
+              }
+              profitBitcoin={
+                simulation.data.chart[simulation.data.chart.length - 1]
+                  .investmentTotalBtc /
+                  simulation.data.invested -
+                1
+              }
+              invested={simulation.data.invested}
+              stock={simulation.data.symbol}
+              amountStock={simulation.data.stockTotal}
+              totalStock={
+                simulation.data.chart[simulation.data.chart.length - 1]
+                  .investmentTotalStock
+              }
+              profitStock={
+                simulation.data.chart[simulation.data.chart.length - 1]
+                  .investmentTotalStock /
+                  simulation.data.invested -
+                1
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Share
+              quote={`See how bitcoin compares against ${simulation.data.symbol}`}
+            />
+          </Grid>
+        </>
       )}
     </Grid>
   );
