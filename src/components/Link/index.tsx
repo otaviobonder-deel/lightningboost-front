@@ -9,6 +9,7 @@ interface ILink {
 
 const useStyles = makeStyles({
   link: {
+    display: "flex",
     textDecoration: "none",
     "& > *": {
       transition: "opacity 200ms ease",
