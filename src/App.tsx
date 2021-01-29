@@ -4,10 +4,15 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DayjsUtils from "@date-io/dayjs";
+import ReactGA from "react-ga";
 import { Routes } from "./routes";
 import theme from "./styles/customMuiTheme";
 import store from "./providers/Store";
 import { Snackbar } from "./components/Snackbar";
+
+ReactGA.initialize("UA-151329445-1", {
+  titleCase: false,
+});
 
 const App: React.FC = () => (
   <Provider store={store}>
