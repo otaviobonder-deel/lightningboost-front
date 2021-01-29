@@ -14,10 +14,6 @@ const links = [
     link: "/comparison",
   },
   {
-    text: "Channels",
-    link: "/channels",
-  },
-  {
     text: "WatchTower",
     link: "/watchtower",
   },
