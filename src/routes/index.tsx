@@ -7,6 +7,7 @@ import { Explorer } from "../pages/explorer";
 import { WatchTower } from "../pages/watchtower";
 import { LiquidityProvider } from "../pages/liquidity";
 import { Comparison } from "../pages/comparison";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 const useStyles = makeStyles({
   body: {
@@ -23,23 +24,25 @@ export const Routes: React.FC = () => {
     <div className={classes.body}>
       <Router>
         <Navigation />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/explorer">
-            <Explorer />
-          </Route>
-          <Route path="/watchtower">
-            <WatchTower />
-          </Route>
-          <Route path="/liquidity">
-            <LiquidityProvider />
-          </Route>
-          <Route path="/comparison">
-            <Comparison />
-          </Route>
-        </Switch>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/explorer">
+              <Explorer />
+            </Route>
+            <Route path="/watchtower">
+              <WatchTower />
+            </Route>
+            <Route path="/liquidity">
+              <LiquidityProvider />
+            </Route>
+            <Route path="/comparison">
+              <Comparison />
+            </Route>
+          </Switch>
+        </ErrorBoundary>
       </Router>
     </div>
   );
