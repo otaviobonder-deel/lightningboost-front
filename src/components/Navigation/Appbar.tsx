@@ -72,7 +72,7 @@ export const AppBar: React.FC<IProps> = ({ links }) => {
       <Container maxWidth="md">
         <Toolbar className={classes.outterDiv}>
           <div className={classes.innerDiv}>
-            <Hidden smUp>
+            <Hidden mdUp>
               <IconButton
                 edge="start"
                 className={classes.menuButton}
@@ -101,7 +101,7 @@ export const AppBar: React.FC<IProps> = ({ links }) => {
               </span>
             </div>
           </Hidden>
-          <Hidden smUp>
+          <Hidden mdUp>
             <BtcPrice />
           </Hidden>
         </Toolbar>
