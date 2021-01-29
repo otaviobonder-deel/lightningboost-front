@@ -10,6 +10,9 @@ interface IPrice {
 }
 
 const useStyles = makeStyles({
+  link: {
+    textDecoration: "none",
+  },
   text: ({ direction }: { direction: string }) => ({
     color: direction === "down" ? "red" : "#7CFC00",
     fontWeight: 600,
@@ -69,11 +72,18 @@ export const BtcPrice: React.FC = () => {
   }, []);
 
   return (
-    <Typography className={classes.text}>
-      BTC {price.value} {price.direction === "up" && <BsFillCaretUpFill />}
-      {price.direction === "down" && (
-        <BsFillCaretDownFill style={{ verticalAlign: "middle" }} />
-      )}
-    </Typography>
+    <a
+      href="https://cryptowat.ch/charts/KRAKEN:BTC-USD"
+      target="_blank"
+      rel="noreferrer"
+      className={classes.link}
+    >
+      <Typography className={classes.text}>
+        BTC {price.value} {price.direction === "up" && <BsFillCaretUpFill />}
+        {price.direction === "down" && (
+          <BsFillCaretDownFill style={{ verticalAlign: "middle" }} />
+        )}
+      </Typography>
+    </a>
   );
 };
