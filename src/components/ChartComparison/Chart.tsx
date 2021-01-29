@@ -23,13 +23,7 @@ const formatYAxis = (tickItem: number): string =>
 const formatTooltip = (value: number): string =>
   Currency(value, { symbol: "$", precision: 0 }).format();
 
-export const Chart: React.FC<IChartApiResponse> = ({
-  invested,
-  btcTotal,
-  stockTotal,
-  chart,
-  symbol,
-}) => (
+export const Chart: React.FC<IChartApiResponse> = ({ chart, symbol }) => (
   <ResponsiveContainer height={400}>
     <ComposedChart data={chart}>
       <defs>

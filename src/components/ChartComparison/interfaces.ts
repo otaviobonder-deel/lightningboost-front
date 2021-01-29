@@ -22,9 +22,6 @@ interface IChartArray {
 }
 
 export interface IChartApiResponse {
-  invested: number;
-  stockTotal: number;
-  btcTotal: number;
   chart: IChartArray[];
   symbol: string;
 }
