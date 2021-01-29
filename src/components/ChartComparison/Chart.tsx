@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   Line,
+  Legend,
 } from "recharts";
 import dayjs from "dayjs";
 import { IChartApiResponse } from "./interfaces";
@@ -45,6 +46,7 @@ export const Chart: React.FC<IChartApiResponse> = ({
       <YAxis tickFormatter={formatYAxis} />
       <CartesianGrid strokeDasharray="3 3" />
       <Tooltip formatter={formatTooltip} labelFormatter={formatDate} />
+      <Legend />
       <Area
         dataKey="investmentTotalBtc"
         name="Total amount in BTC"
