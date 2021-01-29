@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   components: {
     display: "flex",
     flex: 1,
-    flexDirection: "column",
+    justifyContent: "center",
   },
 });
 

@@ -17,6 +17,7 @@ interface IBox {
 const useStyles = makeStyles({
   container: {
     position: "relative",
+    width: "100%",
   },
   innerGrid: {
     display: "flex",
@@ -25,6 +26,12 @@ const useStyles = makeStyles({
     position: "absolute",
     top: "50%",
     transform: "translate(0%, -50%)",
+    width: "100%",
+  },
+  pageContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     width: "100%",
   },
   paper: {
@@ -59,7 +66,7 @@ export const Home: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <div className={classes.pageContent}>
       <div className={classes.container}>
         <video
           autoPlay
@@ -143,6 +150,6 @@ export const Home: React.FC = () => {
           </Grid>
         </Grid>
       </PageContainer>
-    </>
+    </div>
   );
 };
