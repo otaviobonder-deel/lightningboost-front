@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import { Home } from "../pages/home";
 import { Navigation } from "../components/Navigation";
@@ -10,6 +10,7 @@ import { Comparison } from "../pages/comparison";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { Footer } from "../components/Footer";
 import { NotFound } from "../pages/notFound";
+import { useTracking } from "../hooks/useTracking";
 
 const useStyles = makeStyles({
   body: {
@@ -27,36 +28,37 @@ const useStyles = makeStyles({
 export const Routes: React.FC = () => {
   const classes = useStyles();
 
+  // update page changes
+  useTracking();
+
   return (
     <div className={classes.body}>
-      <Router>
-        <Navigation />
-        <ErrorBoundary>
-          <div className={classes.components}>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/explorer">
-                <Explorer />
-              </Route>
-              <Route path="/watchtower">
-                <WatchTower />
-              </Route>
-              <Route path="/liquidity">
-                <LiquidityProvider />
-              </Route>
-              <Route path="/comparison">
-                <Comparison />
-              </Route>
-              <Route path="*">
-                <NotFound />
-              </Route>
-            </Switch>
-          </div>
-        </ErrorBoundary>
-        <Footer />
-      </Router>
+      <Navigation />
+      <ErrorBoundary>
+        <div className={classes.components}>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/explorer">
+              <Explorer />
+            </Route>
+            <Route path="/watchtower">
+              <WatchTower />
+            </Route>
+            <Route path="/liquidity">
+              <LiquidityProvider />
+            </Route>
+            <Route path="/comparison">
+              <Comparison />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </div>
+      </ErrorBoundary>
+      <Footer />
     </div>
   );
 };
