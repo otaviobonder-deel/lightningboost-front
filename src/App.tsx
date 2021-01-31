@@ -10,10 +10,15 @@ import { Routes } from "./routes";
 import theme from "./styles/customMuiTheme";
 import store from "./providers/Store";
 import { Snackbar } from "./components/Snackbar";
+import { worker } from "./mocks/browser";
 
 ReactGA.initialize("UA-151329445-1", {
   debug: process.env.NODE_ENV === "development",
 });
+
+if (process.env.NODE_ENV === "test") {
+  worker.start();
+}
 
 const App: React.FC = () => (
   <Provider store={store}>

@@ -71,7 +71,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Explorer: React.FC = () => {
+const Explorer: React.FC = () => {
   const classes = useStyles();
 
   const [mapType, setMapType] = useState<"globe" | "graph">("globe");
@@ -181,3 +181,5 @@ export const Explorer: React.FC = () => {
     </>
   );
 };
+
+export default Explorer;

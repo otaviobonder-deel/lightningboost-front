@@ -4,7 +4,7 @@ import { PageContainer } from "../../components/Container/PageContainer";
 import { ChartComparison } from "../../components/ChartComparison";
 import { HelmetMetaTag } from "../../components/Helmet";
 
-export const Comparison: React.FC = () => (
+const Comparison: React.FC = () => (
   <>
     <HelmetMetaTag
       title="Compare bitcoin against any investment | LightningBoost"
@@ -41,3 +41,5 @@ export const Comparison: React.FC = () => (
     </PageContainer>
   </>
 );
+
+export default Comparison;

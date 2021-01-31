@@ -30,7 +30,7 @@ const OutOfFunds: React.FC = () => (
   </PageContainer>
 );
 
-export const LiquidityProvider: React.FC = () => {
+const LiquidityProvider: React.FC = () => {
   const { data, loading, error } = useApiRequest<IWalletBalance>({
     initialLoading: true,
     url: "/lightning/walletbalance",
@@ -73,3 +73,5 @@ export const LiquidityProvider: React.FC = () => {
     </>
   );
 };
+
+export default LiquidityProvider;

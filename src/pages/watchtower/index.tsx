@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const WatchTower: React.FC = () => {
+const WatchTower: React.FC = () => {
   const classes = useStyles();
   const { data: uri, loading, error } = useApiRequest<string>({
     initialLoading: true,
@@ -114,3 +114,5 @@ export const WatchTower: React.FC = () => {
     </>
   );
 };
+
+export default WatchTower;

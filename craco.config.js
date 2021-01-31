@@ -1,7 +1,12 @@
 module.exports = {
   plugins: [
     {
-      plugin: require("craco-cesium")(), // eslint-disable-line
+      // eslint-disable-next-line
+      plugin: require("craco-cesium")({
+        loadPartially: true,
+        loadCSSinHTML: true,
+        cesiumPath: "cesium",
+      }),
     },
   ],
 };
